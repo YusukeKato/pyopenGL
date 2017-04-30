@@ -12,12 +12,10 @@ ROW = int(HEIGTH / cs)
 field = [[0 for i in range(ROW+2)] for j in range(COL+2)]
 
 timeCount = 0
+size = 0.015
+DEAD = 0; ALIVE = 1
 
-def display():
-    size = 0.015
-    DEAD = 0; ALIVE = 1
-    glClear(GL_COLOR_BUFFER_BIT)
-    # 生死判定
+def dead_or_alive():
     for i in range(1,COL):
         for j in range(1,ROW):
             count = 0
@@ -31,10 +29,8 @@ def display():
             elif field[j][i] == DEAD:
                 if count == 3:
                     field[j][i] = ALIVE
-    # 配置
-    put()
 
-    # フィールド作成
+def field_create():
     glPointSize(8.0)
     glBegin(GL_POINTS)
     x = size; y = size
@@ -50,6 +46,15 @@ def display():
                 glVertex3f(x, y, 0.0)
             x += size
     glEnd()
+
+def display():
+    glClear(GL_COLOR_BUFFER_BIT)
+    # 生死判定
+    dead_or_alive()
+    # 配置
+    put()
+    # フィールド作成
+    field_create()
     glFlush()
 
 def init():
